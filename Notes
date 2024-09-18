@@ -210,3 +210,45 @@ tmpfs           781M  108K  781M   1% /run/user/1000
 swapon: /dev/sdc9: found signature [pagesize=4096, signature=swap]
 swapon: /dev/sdc9: pagesize=4096, swapsize=2147483648, devsize=2147483648
 swapon /dev/sdc9
+
+lfs:~$ echo $MAKEFLAGS
+-j12
+lfs:~$ echo $LFS_TGT
+x86_64-lfs-linux-gnu
+
+Cross Compilation
+lfs:/mnt/lfs/sources$ tar -xvf binutils-2.43.1.tar.xz 
+time {../configure --prefix=$LFS/tools \
+             --with-sysroot=$LFS \
+             --target=$LFS_TGT   \
+             --disable-nls       \
+             --enable-gprofng=no \
+             --disable-werror    \
+             --enable-new-dtags  \
+             --enable-default-hash-style=gnu && make && make install 
+
+real	0m39.390s
+user	2m25.374s
+sys	0m31.486s
+
+lfs:/mnt/lfs/sources/gcc-14.2.0$ tar -xf ../mpfr-4.2.1.tar.xz
+lfs:/mnt/lfs/sources/gcc-14.2.0$ mv -v mpfr-4.2.1 mpfr
+renamed 'mpfr-4.2.1' -> 'mpfr'
+lfs:/mnt/lfs/sources/gcc-14.2.0$ tar -xf ../gmp-6.3.0.tar.xz
+lfs:/mnt/lfs/sources/gcc-14.2.0$ mv -v gmp-6.3.0 gmp
+renamed 'gmp-6.3.0' -> 'gmp'
+lfs:/mnt/lfs/sources/gcc-14.2.0$ tar -xf ../mpc-1.3.1.tar.gz
+lfs:/mnt/lfs/sources/gcc-14.2.0$ mv -v mpc-1.3.1 mpc
+renamed 'mpc-1.3.1' -> 'mpc'
+
+https://www.incredibuild.com/integrations/gcc
+
+lfs:/mnt/lfs/sources/glibc-2.40/build$ readelf -l a.out | grep ld-linux
+      [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]
+
+successfully built cross compiler tool chain
+bin utils 
+GCC
+Linux API headers
+Glibc
+Libstdc++ from GCC
