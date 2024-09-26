@@ -249,6 +249,15 @@ lfs:/mnt/lfs/sources/glibc-2.40/build$ readelf -l a.out | grep ld-linux
 successfully built cross compiler tool chain
 bin utils 
 GCC
+
+		=== Summary of results ===
+      1 FAIL
+   5211 PASS
+    138 UNSUPPORTED
+     16 XFAIL
+      4 XPASS
+FAIL: io/tst-lchmod
+
 Linux API headers
 Glibc
 Libstdc++ from GCC
